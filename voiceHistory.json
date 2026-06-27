@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1780804469652,
+    "type": "order",
+    "transcript": "1 chicken burger aur 2 fries order kar do",
+    "createdAt": "2026-06-07T03:54:29.652Z"
+  },
+  {
+    "id": 1780808330292,
+    "type": "order",
+    "transcript": "1 chicken burger aur 2 fries order kar do",
+    "createdAt": "2026-06-07T04:58:50.292Z"
+  }
+]
