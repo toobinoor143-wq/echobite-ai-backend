@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Discount = require("../models/discount");
+const Discount = require("../models/Discount");
 const Food = require("../models/Food");
 
 
