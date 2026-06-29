@@ -4,7 +4,7 @@ const path = require("path");
 const fs = require("fs");
 
 // Models
-const Food = require("../models/food");
+const Food = require("../models/Food");
 
 // Files (sirf history ke liye use ho raha hai)
 const VOICE_FILE = path.join(__dirname, "../voiceHistory.json");
