@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { MongoClient } = require("mongodb");
+
+
 
 // Routes Import
 const cartRoutes = require("./routes/cartRoutes");
@@ -19,9 +22,19 @@ const app = express();
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/lawapp')
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.log('❌ DB Error:', err));
+const uri = 'mongodb+srv://global:pihUGxpnHnikz8sP@cluster0.cfr0ild.mongodb.net/echobite_db?retryWrites=true&w=majority&appName=Cluster0';
+
+
+const client = new MongoClient(uri);
+// MongoDB Connection
+(async () => {
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error(err);
+  }
+})();
 
 // User Schema
 
@@ -46,23 +59,23 @@ app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log("🔐 Login attempt:", email);
-    
+
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
-    
+
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
-    
+
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       'mySecretKey',
       { expiresIn: '7d' }
     );
-    
+
     res.json({
       success: true,
       message: 'Login successful',
