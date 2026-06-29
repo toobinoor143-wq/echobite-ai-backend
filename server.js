@@ -1,8 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { MongoClient } = require("mongodb");
 
 
 
@@ -21,20 +21,10 @@ const User = require("./models/user");
 const app = express();
 app.use(express.json());
 
-// MongoDB Connection
-const uri = 'mongodb+srv://global:pihUGxpnHnikz8sP@cluster0.cfr0ild.mongodb.net/echobite_db?retryWrites=true&w=majority&appName=Cluster0';
-
-
-const client = new MongoClient(uri);
-// MongoDB Connection
-(async () => {
-  try {
-    await client.connect();
-    console.log("Connected to MongoDB");
-  } catch (err) {
-    console.error(err);
-  }
-})();
+// MongoDB Connection (Mongoose — required for all models)
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 // User Schema
 
