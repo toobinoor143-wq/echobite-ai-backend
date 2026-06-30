@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Discount = require("../models/Discount");
-const Food = require("../models/Food");
+const Food = require("../models/food");
 
 
 // CREATE DISCOUNT
