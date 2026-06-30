@@ -21,13 +21,20 @@ const User = require("./models/user");
 const app = express();
 
 const path = require("path");
+const fs = require("fs");
 const imageRoutes = require("./routes/imageRoutes");
 const checkoutRoutes = require("./routes/checkoutRoutes");
+
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 //middleawear
 app.use(express.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/images", express.static(path.join(__dirname, "uploads")));
 
 
 // CORS — must run before all routes (works on Render + local)

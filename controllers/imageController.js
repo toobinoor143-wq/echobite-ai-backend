@@ -7,11 +7,13 @@ exports.uploadImage = (req, res) => {
       });
     }
 
+    const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
+
     res.status(200).json({
       success: true,
       message: "Image uploaded successfully",
       filename: req.file.filename,
-      imageUrl: `http://localhost:5000/uploads/${req.file.filename}`,
+      imageUrl: `${baseUrl}/images/${req.file.filename}`,
     });
   } catch (err) {
     res.status(500).json({
