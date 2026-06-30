@@ -62,15 +62,9 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 // MongoDB Connection (Mongoose — required for all models)
-mongoose
-  .connect("mongodb://127.0.0.1:27017/echobite_db")
-  .then(() => {
-    console.log("✅ Connected to Local MongoDB");
-  })
-  .catch((err) => {
-    console.error("❌ MongoDB Connection Error:", err);
-  });
-// User Schema
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 
 
