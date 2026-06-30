@@ -53,4 +53,24 @@ router.get("/product/:productId", async (req, res) => {
   }
 });
 
+// GET /api/review/all
+router.get("/all", async (req, res) => {
+  try {
+    const reviews = await Review.find()
+      .populate("productId", "name")
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      count: reviews.length,
+      reviews,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;
