@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const Food = require("../models/Food");
+const Food = require("../models/food");
 const Order = require("../models/order");
 
 // Dashboard
