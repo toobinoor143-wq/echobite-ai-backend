@@ -52,7 +52,48 @@ router.get("/all", async (req, res) => {
     });
   }
 });
+// GET ORDER SUMMARY
+router.get("/summary/:orderId", async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.orderId);
 
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    const summary = {
+      orderId: order._id,
+      customerName: order.userName,
+      status: order.status,
+      totalItems: order.items.reduce(
+        (total, item) => total + item.quantity,
+        0
+      ),
+      items: order.items.map((item) => ({
+        foodId: item.foodId,
+        foodName: item.foodName,
+        quantity: item.quantity,
+        price: item.price,
+        subtotal: item.price * item.quantity,
+      })),
+      totalPrice: order.totalPrice,
+      createdAt: order.createdAt,
+    };
+
+    res.status(200).json({
+      success: true,
+      summary,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 
 // UPDATE ORDER STATUS
 router.put("/:orderId/status", async (req, res) => {
